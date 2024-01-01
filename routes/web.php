@@ -3,6 +3,7 @@
 use App\Http\Controllers\GetUserCardsController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +22,8 @@ Route::get('/payment',function () {
 
 Route::post('/payment/pay',[PaymentController::class,'index'])->name('index');
 Route::get('/cards',[GetUserCardsController::class,'index'])->name('user-cards');
+Route::post('/gateway',[SettingController::class,'index'])->name('gateway');
+Route::get('/get/gateway',[SettingController::class,'getGateway'])->name('get-gateway');
 Route::get('/', function () {
     return view('welcome');
 });

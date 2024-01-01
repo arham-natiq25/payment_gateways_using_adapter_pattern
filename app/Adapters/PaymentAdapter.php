@@ -2,17 +2,25 @@
 
 namespace App\Adapters;
 
+use App\Gateways\AuthorizenetPaymentGateway;
 use App\Gateways\StripePaymentGateway;
-use App\Interfaces\PaymentGatewayStripe;
+use App\Interfaces\PaymentGateway;
 
-class PaymentAdapter implements PaymentGatewayStripe {
+class PaymentAdapter implements PaymentGateway {
 
     private $stripe;
-    public function __construct(StripePaymentGateway $stripe) {
+    private $authorize;
+    public function __construct(StripePaymentGateway $stripe, AuthorizenetPaymentGateway $authorize ) {
         $this->stripe = $stripe ;
+        $this->authorize=$authorize;
+
     }
-    function chargeCustomer($request) {
+    function chargeCustomerUsingStripe($request) {
 
       return  $this->stripe->chargeUsingStripe($request);
+    }
+
+    public function chargeCustomerUsingAuthorize($request){
+        return $this->authorize->chargeUsingAuthorizenet($request);
     }
 }
