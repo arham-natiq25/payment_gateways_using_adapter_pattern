@@ -2,6 +2,7 @@
 
 namespace App\Gateways;
 
+use App\Interfaces\PaymentGateway;
 use App\Models\CustomerProfile;
 use App\Models\TransactionRecords;
 use Illuminate\Support\Facades\Auth;
@@ -10,13 +11,12 @@ use Stripe\PaymentIntent;
 use Stripe\PaymentMethod;
 use Stripe\Stripe;
 
-class StripePaymentGateway
+class StripePaymentGateway implements PaymentGateway
 {
 
-    public function __construct()
-    {
-    }
-    function chargeUsingStripe($request)
+
+   
+    function charge($request)
     {
         Stripe::setApiKey(config('stripe.stripe_sk'));
         if ($request->method===0) {
@@ -78,7 +78,8 @@ class StripePaymentGateway
                 'trx_id'=>$chargeId,
                 'method'=>'stripe'
             ]);
-            return response()->json(['success' => true, 'message' => 'Payment successfully Recieved']);
+            return response()->json(['success' => true, 'message' => 'Payment successfully received']);
+
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }

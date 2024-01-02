@@ -14,12 +14,12 @@
             </div>
         </div>
     </div>
-
+    <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+    <div v-if="successMessage" class="alert alert-success">
+        {{ successMessage }}
+    </div>
     <div v-show="active===1">
-        <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-        <div v-if="successMessage" class="alert alert-success">
-            {{ successMessage }}
-        </div>
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -351,7 +351,7 @@ export default {
             axios
                 .post("/payment/pay", cardDetails)
                 .then((response) => {
-                    this.successMessage = "Payment successful: " + response.data.message;
+                    this.successMessage = response.data.message;
                     this.getCustomerCards();
                 })
                 .catch((error) => {

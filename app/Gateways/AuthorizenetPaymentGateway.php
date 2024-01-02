@@ -2,6 +2,7 @@
 
 namespace App\Gateways;
 
+use App\Interfaces\PaymentGateway;
 use App\Models\CustomerProfile;
 use App\Models\TransactionRecords;
 use Illuminate\Support\Facades\Auth;
@@ -9,9 +10,14 @@ use net\authorize\api\contract\v1 as AnetAPI;
 use net\authorize\api\controller as AnetController;
 
 
-class AuthorizenetPaymentGateway{
+class AuthorizenetPaymentGateway implements PaymentGateway{
 
-    function chargeUsingAuthorizenet($request) {
+    // function charge($request) {
+    //     // here you call another function or put your code in this itself
+    // }
+
+
+    function charge($request) {
 
         $user = Auth::user();
         /* Create a merchantAuthenticationType object with authentication details
